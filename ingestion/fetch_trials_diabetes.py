@@ -1,7 +1,5 @@
 import requests
-import json
-import os
-from utils import save_raw_data, upload_to_s3
+from utils import save_raw_data
 
 BASE_URL = "https://clinicaltrials.gov/api/v2/studies"
 
@@ -17,11 +15,11 @@ def fetch_trials_diabetes(condition, page_size=50):
 
     return response.json()
 
-if __name__ == "__main__":
+def run():
     data = fetch_trials_diabetes("diabetes")
     save_raw_data(data, "trials_diabetes.json")
-    upload_to_s3(
-        local_filepath="data/raw/trials_diabetes.json",
-        bucket_name="clinical-data-platform-omiliauskas",
-        s3_key="raw/trials_diabetes.json"
-    )
+    return "data/raw/trials_diabetes.json"
+
+if __name__ == "__main__":
+    local_path = run()
+

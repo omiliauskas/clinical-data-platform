@@ -2,7 +2,12 @@ venv/
 __pycache__/
 .env
 *.pyc
-data/
+data/*
+!data/raw/
+data/raw/*
+!data/raw/.gitkeep
 terraform/.terraform/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+airflow/logs/
+airflow/plugins/
