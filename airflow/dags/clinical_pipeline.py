@@ -46,18 +46,27 @@ def clinical_pipeline():
             s3_key=s3_key
         )
         return parquet_path
+
+    @task
+    def trigger_glue_crawler():
+        import boto3 
+
+        glue = boto3.client("glue", region_name="eu-north-1")
+        glue.start_crawler(Name="clinical-data-platform-crawler")
     
     trials_path = fetch_trials()
     trials_parquet_path = convert_to_parquet.override(task_id="convert_trials")(trials_path)
-    upload_to_s3.override(task_id="upload_trials")(trials_parquet_path, "staging/trials_heart_disease.parquet")
+    trials_heart_uploaded = upload_to_s3.override(task_id="upload_trials")(trials_parquet_path, "staging/trials_heart_disease/trials_heart_disease.parquet")
 
     adverse_events_path = fetch_adverse_events()
     adverse_events_parquet_path = convert_to_parquet.override(task_id="convert_adverse_events")(adverse_events_path)
-    upload_to_s3.override(task_id="upload_adverse_events")(adverse_events_parquet_path, "staging/adverse_events.parquet")
+    adverse_events_uploaded = upload_to_s3.override(task_id="upload_adverse_events")(adverse_events_parquet_path, "staging/adverse_events/adverse_events.parquet")
 
     trials_diabetes_path = fetch_trials_diabetes()
     trials_diabetes_parquet_path = convert_to_parquet.override(task_id="convert_trials_diabetes")(trials_diabetes_path)
-    upload_to_s3.override(task_id="upload_trials_diabetes")(trials_diabetes_parquet_path, "staging/trials_diabetes.parquet")
+    trials_diabetes_uploaded = upload_to_s3.override(task_id="upload_trials_diabetes")(trials_diabetes_parquet_path, "staging/trials_diabetes/trials_diabetes.parquet")
+
+    [trials_heart_uploaded, adverse_events_uploaded, trials_diabetes_uploaded] >> trigger_glue_crawler()
 
 
 clinical_pipeline()

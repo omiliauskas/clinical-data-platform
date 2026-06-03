@@ -65,8 +65,6 @@ resource "aws_glue_crawler" "clinical_crawler" {
     database_name   = aws_glue_catalog_database.clinical_database.name
 
     s3_target {
-      path = "s3://clinical-data-platform-omiliauskas/raw/"
+      path = "s3://clinical-data-platform-omiliauskas/staging/"
     }
-
-    schedule = "cron(0 12 * * ? *)"
 }
