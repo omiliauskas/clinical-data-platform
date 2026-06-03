@@ -17,7 +17,8 @@ def fetch_trials_diabetes(condition, page_size=50):
 
 def run():
     data = fetch_trials_diabetes("diabetes")
-    save_raw_data(data, "trials_diabetes.json")
+    studies = data["studies"]
+    save_raw_data(studies, "trials_diabetes.json")
     return "data/raw/trials_diabetes.json"
 
 if __name__ == "__main__":

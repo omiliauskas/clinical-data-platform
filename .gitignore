@@ -11,3 +11,6 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 airflow/logs/
 airflow/plugins/
+target/
+dbt_packages/
+logs/

@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: clinical
+    database: awsdatacatalog
+    schema: clinical_data_platform
+    tables:
+      - name: trials_heart_disease
+      - name: adverse_events
+      - name: trials_diabetes
