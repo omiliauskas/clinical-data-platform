@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: fct_trials_summary
+    columns:
+      - name: condition
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:  
+                  - heart_disease
+                  - diabetes
+      - name: trials_count
+        tests:
+          - not_null
