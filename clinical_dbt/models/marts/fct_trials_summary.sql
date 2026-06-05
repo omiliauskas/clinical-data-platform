@@ -1,3 +1,5 @@
+{{ config(external_location='s3://clinical-data-platform-omiliauskas/marts/fct_trials_summary/') }}
+
 WITH trials AS (
 
     SELECT nct_id, overall_status, enrollment_count, 'heart_disease' AS condition
