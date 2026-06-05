@@ -45,6 +45,8 @@ flowchart LR
 
 *Airflow orchestrates the ingestion DAG (fan-in to the Glue crawler). Terraform provisions all AWS infrastructure. GitHub Actions runs CI on every push.*
 
+*S3 + Glue Catalog + Athena together form a **lakehouse-style** architecture: open-format Parquet files in object storage with a SQL/table layer on top — no separate warehouse. (Plain Parquet, not an ACID table format like Iceberg/Delta — see roadmap.)*
+
 **Flow:** Python fetchers pull data from the ClinicalTrials.gov and OpenFDA APIs. Each raw response is archived as **JSON in S3 `raw/`** (an immutable, replayable copy), then converted to **Parquet and landed in S3 `staging/`**. A **Glue crawler** catalogs `staging/` into the Glue Data Catalog, so **Athena** can query it via schema-on-read. **dbt** then models the data: a **staging** layer cleans and standardizes each source, and a **marts** layer applies business logic and aggregation, materializing its output back to S3 under `marts/`.
 
 ---
@@ -125,3 +127,4 @@ dbt docs generate && dbt docs serve --port 8081
 - **Adverse-events mart.** Build the second star (e.g. counts by country, seriousness rate) — no shared key with trials, so it stands alone.
 - **Stronger CI.** Have GitHub Actions run `dbt build` (compile + run + test) on every push, not just a version check.
 - **Rename the adverse-events prefix/table** to reflect that it is a heart-disease-filtered slice.
+- **ACID table format.** Migrate marts to Apache Iceberg for atomic writes, snapshot isolation, time travel, and safe schema evolution — turning the lakehouse-style setup into a full lakehouse.
