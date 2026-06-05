@@ -1,15 +1,32 @@
-Welcome to your new dbt project!
+# clinical_dbt
 
-### Using the starter project
+dbt project for the Clinical Data Platform. Transforms raw clinical data
+(catalogued in AWS Glue, queried via Athena) into analytics-ready models.
 
-Try running the following commands:
-- dbt run
-- dbt test
+## Layers
 
+- **staging/** — The first transformation layer: one model per source, reading
+  raw Glue tables with dbt `source()`. Flattens nested JSON, renames fields to
+  snake_case, and standardizes types — turning messy raw data into a clean,
+  typed foundation for the marts.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+- **marts/** — Business logic and aggregation, built on the staging models with
+  dbt `ref()`. `fct_trials_summary` combines the two trials staging models with a
+  `UNION` (they share a schema; no shared key exists to join on) and aggregates
+  trial counts and total enrollment by condition and overall status.
+
+## Tests
+
+Defined in `schema.yml` and run on every build — e.g. `not_null` and
+`accepted_values`. These are the version-controlled equivalent of the manual
+cross-source reconciliation checks behind a clinical database lock.
+
+## Run
+
+```bash
+dbt run      # build models
+dbt test     # run tests
+dbt docs generate && dbt docs serve --port 8081   # lineage + docs
+```
+
+See the [root README](../README.md) for full architecture.
