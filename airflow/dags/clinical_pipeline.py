@@ -16,7 +16,7 @@ def clinical_pipeline():
     @task
     def fetch_trials():
         from fetch_trials import run
-        return run()
+        return run("heart disease", "trials_heart_disease.json")
 
     @task
     def fetch_adverse_events():
@@ -25,8 +25,8 @@ def clinical_pipeline():
 
     @task
     def fetch_trials_diabetes():
-        from fetch_trials_diabetes import run
-        return run()
+        from fetch_trials import run
+        return run("diabetes", "trials_diabetes.json")
 
     @task
     def convert_to_parquet(input_path: str):

@@ -15,12 +15,12 @@ def fetch_trials(condition, page_size=50):
 
     return response.json()
 
-def run():
-    data = fetch_trials("heart disease")
+def run(condition, file_name):
+    data = fetch_trials(condition)
     studies = data["studies"]
-    save_raw_data(studies, "trials_heart_disease.json")
-    return "data/raw/trials_heart_disease.json"
+    save_raw_data(studies, file_name)
+    return f"data/raw/{file_name}"
 
 if __name__ == "__main__":
-    local_path = run()
-
+    run("heart disease", "trials_heart_disease.json")
+    run("diabetes", "trials_diabetes.json")
