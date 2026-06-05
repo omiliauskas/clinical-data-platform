@@ -6,7 +6,7 @@ dbt project for the Clinical Data Platform. Transforms raw clinical data
 ## Layers
 
 - **staging/** — The first transformation layer: one model per source, reading
-  raw Glue tables with dbt `source()`. Flattens nested JSON, renames fields to
+  raw Glue tables with dbt `source()`. Flattens nested fields, renames fields to
   snake_case, and standardizes types — turning messy raw data into a clean,
   typed foundation for the marts.
 
