@@ -55,14 +55,17 @@ def clinical_pipeline():
         glue.start_crawler(Name="clinical-data-platform-crawler")
     
     trials_path = fetch_trials()
+    upload_to_s3.override(task_id="upload_raw_trials")(trials_path, "raw/trials_heart_disease/trials_heart_disease.json")
     trials_parquet_path = convert_to_parquet.override(task_id="convert_trials")(trials_path)
     trials_heart_uploaded = upload_to_s3.override(task_id="upload_trials")(trials_parquet_path, "staging/trials_heart_disease/trials_heart_disease.parquet")
 
     adverse_events_path = fetch_adverse_events()
+    upload_to_s3.override(task_id="upload_raw_adverse_events")(adverse_events_path, "raw/adverse_events/adverse_events.json")
     adverse_events_parquet_path = convert_to_parquet.override(task_id="convert_adverse_events")(adverse_events_path)
     adverse_events_uploaded = upload_to_s3.override(task_id="upload_adverse_events")(adverse_events_parquet_path, "staging/adverse_events/adverse_events.parquet")
 
     trials_diabetes_path = fetch_trials_diabetes()
+    upload_to_s3.override(task_id="upload_raw_trials_diabetes")(trials_diabetes_path, "raw/trials_diabetes/trials_diabetes.json")
     trials_diabetes_parquet_path = convert_to_parquet.override(task_id="convert_trials_diabetes")(trials_diabetes_path)
     trials_diabetes_uploaded = upload_to_s3.override(task_id="upload_trials_diabetes")(trials_diabetes_parquet_path, "staging/trials_diabetes/trials_diabetes.parquet")
 
