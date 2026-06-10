@@ -6,5 +6,5 @@ sources:
     schema: clinical_data_platform
     tables:
       - name: trials_heart_disease
-      - name: adverse_events
+      - name: adverse_events_heart_disease
       - name: trials_diabetes

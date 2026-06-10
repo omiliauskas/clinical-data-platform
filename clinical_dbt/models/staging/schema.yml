@@ -19,7 +19,7 @@ models:
       - name: overall_status
         tests:
           - not_null 
-  - name: stg_adverse_events
+  - name: stg_adverse_events_heart_disease
     columns:
       - name: safety_report_id
         tests:
