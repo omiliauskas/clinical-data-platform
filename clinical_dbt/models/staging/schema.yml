@@ -25,3 +25,18 @@ models:
         tests:
           - unique
           - not_null
+      - name: is_serious
+        tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+      - name: is_death
+        tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+      - name: is_hospitalization
+        tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false
