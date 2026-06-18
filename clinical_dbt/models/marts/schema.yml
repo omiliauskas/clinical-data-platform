@@ -14,3 +14,15 @@ models:
       - name: trials_count
         tests:
           - not_null
+  - name: dim_condition
+    columns:
+      - name: condition_key
+        tests:
+          - unique
+          - not_null
+  - name: dim_status
+    columns:
+      - name: overall_status_key
+        tests:
+          - unique
+          - not_null
