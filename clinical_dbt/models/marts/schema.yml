@@ -26,3 +26,9 @@ models:
         tests:
           - unique
           - not_null
+  - name: dim_study_type
+    columns:
+      - name: study_type_key
+        tests:
+          - unique
+          - not_null
