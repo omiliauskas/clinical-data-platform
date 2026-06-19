@@ -32,3 +32,14 @@ models:
         tests:
           - unique
           - not_null
+  - name: fct_trials
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - nct_id
+              - condition_key
+    columns:
+      - name: nct_id
+        tests:
+          - not_null
