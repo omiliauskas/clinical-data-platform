@@ -43,3 +43,15 @@ models:
       - name: nct_id
         tests:
           - not_null
+  - name: dim_report_type
+    columns:
+      - name: report_type_key
+        tests:
+          - unique
+          - not_null
+  - name: dim_country
+    columns:
+      - name: country_key
+        tests:
+          - unique
+          - not_null
