@@ -43,6 +43,24 @@ models:
       - name: nct_id
         tests:
           - not_null
+      - name: condition_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_condition')
+                field: condition_key
+      - name: overall_status_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_status')
+                field: overall_status_key
+      - name: study_type_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_study_type')
+                field: study_type_key
   - name: dim_report_type
     columns:
       - name: report_type_key
