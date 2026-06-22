@@ -61,3 +61,33 @@ models:
         tests:
           - unique
           - not_null
+  - name: fct_adverse_events
+    columns:
+      - name: safety_report_id
+        tests:
+          - unique
+          - not_null
+      - name: primary_source_country_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_key
+      - name: occur_country_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_key
+      - name: date_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: report_type_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_report_type')
+                field: report_type_key
