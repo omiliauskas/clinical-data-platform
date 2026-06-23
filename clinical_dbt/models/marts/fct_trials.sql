@@ -1,4 +1,10 @@
-{{ config(external_location='s3://clinical-data-platform-omiliauskas/marts/fct_trials/') }}
+{{ config(
+    materialized='incremental',
+    table_type='iceberg',
+    incremental_strategy='merge',
+    unique_key=['nct_id', 'condition_key'],
+    format='parquet'
+) }}
 
 WITH trials AS (
 
