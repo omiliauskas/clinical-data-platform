@@ -1,4 +1,10 @@
-{{ config(external_location='s3://clinical-data-platform-omiliauskas/marts/fct_adverse_events/') }}
+{{ config(
+materialized='incremental',
+table_type='iceberg',
+incremental_strategy='merge',
+unique_key='safety_report_id',
+format='parquet'
+) }}
 
 SELECT
     safety_report_id,
